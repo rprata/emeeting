@@ -36,7 +36,9 @@
 
 <br>
 
-<!--<%= link_to 'New Event', new_event_path %>-->
+<% if current_user.is_admin == 1 %>
+  <%= link_to 'New Event', new_event_path %>
+<% end %>
 
 <br>
 

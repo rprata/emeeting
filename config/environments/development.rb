@@ -1,4 +1,4 @@
-Imeeting::Application.configure do
+Emeeting::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on

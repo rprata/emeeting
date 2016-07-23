@@ -46,3 +46,9 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+
+source 'https://rails-assets.org' do
+	gem 'rails-assets-sweetalert'
+end
+# gem 'sweet-alert'
+gem 'sweet-alert-confirm'

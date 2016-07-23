@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require sweet-alert-confirm
 //= require_tree .
+//= require turbolinks
 //= require moment
 //= require fullcalendar
-
-$('#calendar').fullCalendar({});
+//= require fullcalendar/lang/pt-br

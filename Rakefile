@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Imeeting::Application.load_tasks
+Emeeting::Application.load_tasks

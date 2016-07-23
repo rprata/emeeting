@@ -19,6 +19,9 @@
 
     <link href="signin.css" rel="stylesheet">
 
+    <link href="sweetalert.css" rel="stylesheet">
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,51 +73,42 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <a href="#menu-toggle" class="btn btn-default btn-sm" id="menu-toggle"><<</a>
-                        <h1>Adicionar Novo Executivo</h1>
-					  	<% if flash[:error] %>
-					      <div class="alert alert-danger">
-					        <strong><%= flash[:error] %></strong>
-					      </div>
-					    <% end %>
-                        <% if flash[:success] %>
-                          <div class="alert alert-success">
-                            <strong><%= flash[:success] %></strong>
-                          </div>
-                        <% end %>
-					    <br>
-					    <br>
-					      <div class="form-signin">
-					        <%= form_for @user, :html => { :id => "signupForm"}  do |f| %>
-					          <%= f.email_field :email, :placeholder => "Email", class: "form-control" %>
-					          <%= f.password_field :password, :placeholder => "Password" , class: "form-control"%>
-					          <%= f.submit "Criar Usuário", class: "btn btn-primary btn-block" %>
-					        <% end %>
-					    </div>
-
-
-					    <%= javascript_include_tag "jquery.js" %>
-					    <%= javascript_include_tag "jquery.validate.js" %>
-
-					    <!-- Bootstrap Core JavaScript -->
-					    <%= javascript_include_tag "bootstrap.min.js" %>
-
-					    <script>
-					        $(document).ready(function() {
-					          $("#signupForm").validate({
-					            rules: {
-					              "user[email]": {
-					                required: true,
-					                email: true,
-					              },
-					              "user[password]": {
-					                required: true,
-					                minlength: 6
-					              }
-					            }
-					           });
-					       });
-
-					    </script>
+                        <h1>Executivos</h1>
+                        <div class="table-responsive">          
+                        <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Email
+                                        </td>
+                                        <td>
+                                            Criado em
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% @users.each do |user| %>
+                                        <% if user.is_admin == 0%>
+                                        <tr>
+                                            <td><%= user.email %> </td>
+                                            <td><%= user.created_at %></td>
+                                            <td><%= link_to "Remover", user, :method => :delete, data: {
+                                                  confirm: 'Exclusão de Executivo!',
+                                                  :'confirm-button-text' => 'Sim',
+                                                  :'cancel-button-text' => 'Não',
+                                                  :'confirm-button-color' => '#66CD00',
+                                                  :'sweet-alert-type' => 'info',
+                                                  text: 'Você realmente quer excluir este executivo?'} %></td>
+                                        </tr>
+                                        <% end %>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div> 
+                        <!-- fim da table -->
                     </div>
                 </div>
             </div>
@@ -124,11 +118,13 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <%= javascript_include_tag "sweetalert.min.js" %>
+
+    <%= javascript_include_tag "jquery.js" %>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <%= javascript_include_tag "bootstrap.min.js" %>
+
 
     <!-- Menu Toggle Script -->
     <script>

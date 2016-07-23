@@ -1,12 +1,20 @@
-Imeeting::Application.routes.draw do
+Emeeting::Application.routes.draw do
   resources :events
+
+
+  get '/' => 'events#index'
+  get '/index' => 'events#index'
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
+
+  resources :users
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  get '/users/:id', :to => 'users#show'
+  get '/list', :to => 'users#list'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

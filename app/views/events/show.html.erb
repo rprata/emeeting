@@ -1,24 +1,155 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+<head>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @event.start_time %>
-</p>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<p>
-  <strong>End time:</strong>
-  <%= @event.end_time %>
-</p>
+    <title>Simple Sidebar - Start Bootstrap Template</title>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="simple-sidebar.css" rel="stylesheet">
+
+    <link href="signin.css" rel="stylesheet">
+
+    <link href="sweetalert.css" rel="stylesheet">
+    <link href="bootstrap-datepicker.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                	<a href="#">
+                  		emeeting
+                  	</a>
+                </li>
+                <li>
+                    <a href="/events">Principal</a>
+                </li>
+                <% if current_user.is_admin == 1 %>
+                <li>
+                    <a href="/add">Adicionar Reunião</a>
+                </li>
+                <% end %>
+                <% if current_user.is_admin == 1 %>
+                <li>
+                  <%= link_to "Adicionar Novo Executivo", '/signup' %>
+                </li>
+                <li>
+                  <%= link_to "Listar Executivos", '/list' %>
+                </li>
+                <% end %>
+                <li>
+                    <%= link_to "Sair", '/logout' %>
+                </li>
+            </ul>
+        </div>
+
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="#menu-toggle" class="btn btn-default btn-sm" id="menu-toggle"><<</a>
+                        <h1><%= @event.title %></h1>
+                        <hr>
+                        <% if flash[:error] %>
+					      <div class="alert alert-danger">
+					        <strong><%= flash[:error] %></strong>
+					      </div>
+					    <% end %>
+                        <% if flash[:success] %>
+                          <div class="alert alert-success">
+                            <strong><%= flash[:success] %></strong>
+                          </div>
+                        <% end %>
+						<div class="col-md-8">
+							<%= link_to 'Editar', edit_event_path(@event) %> |
+							<%= link_to 'Voltar', events_path %>
+							<p>
+							  <h4><strong>Data:</strong></h4>
+							  <%- t = @event.start_time.strftime("%d/%m/%Y") %>
+							  <%= t %>
+							</p>
+							<p>
+							  <h4><strong>Descrição:</strong></h4>
+							  <%= @event.description %>
+							</p>
+                            <% @comments.each do |c| %>
+                            <hr>
+                            <p>
+                                <strong><%= c.user %> disse: </strong><%= c.comment %>
+                            </p>
+                            <% end %>
+                            <hr>
+                            <%= form_for @comment, :html => { :id => "commentForm"}, :url => '/do_comment'  do |f| %>
+                              <%= f.text_area :comment, :placeholder => "Comentário" , class: "form-control"%>
+                              <br>
+                              <%= f.submit "Commentar", class: "btn btn-primary btn-block" %>
+                            <% end %>
+					    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <%= javascript_include_tag "sweetalert.min.js" %>
+
+    <%= javascript_include_tag "jquery.js" %>
+
+    <!-- Bootstrap Core JavaScript -->
+    <%= javascript_include_tag "bootstrap.min.js" %>
+
+    <%= javascript_include_tag "bootstrap-datepicker.js" %>
+    <%= javascript_include_tag "bootstrap-datepicker.pt-BR.min.js" %>
+
+    <script type="text/javascript">
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#datepicker').datepicker(
+            {
+                format: "dd/mm/yyyy",
+                language: "pt-BR",
+                todayBtn: "linked",
+                todayHighlight: true
+            }
+        );
+      });
+    </script>
+
+</body>
+
+</html>

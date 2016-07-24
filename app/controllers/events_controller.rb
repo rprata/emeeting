@@ -11,6 +11,19 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @event = Event.find(params[:id])
+    @comments = @event.comments
+    @comment = Comment.new
+  end
+
+  def comment
+    @comment = Comment.new
+    @comment.user = current_user.email
+    @comment.comment = comment_params[:comment]
+    @comment.event = Event.find(1) #alterar para pegar a pagina corrent
+    if @comment.save
+      redirect_to :back
+    end
   end
 
   # GET /events/new
@@ -81,10 +94,14 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+      @comments = @event.comments
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:title, :description, :start_time, :end_time)
+    end
+    def comment_params
+      params.require(:comment).permit(:comment)
     end
 end

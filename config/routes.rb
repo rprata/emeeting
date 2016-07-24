@@ -18,6 +18,10 @@ Emeeting::Application.routes.draw do
   get '/users/:id', :to => 'users#show'
   get '/list', :to => 'users#list'
 
+
+  resources :comments
+  post '/do_comment' => 'events#comment'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

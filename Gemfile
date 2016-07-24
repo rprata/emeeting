@@ -52,3 +52,5 @@ source 'https://rails-assets.org' do
 end
 # gem 'sweet-alert'
 gem 'sweet-alert-confirm'
+
+gem 'bootstrap-datepicker-rails'

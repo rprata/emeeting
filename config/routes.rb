@@ -5,6 +5,8 @@ Emeeting::Application.routes.draw do
   get '/' => 'events#index'
   get '/index' => 'events#index'
 
+  get '/add' => 'events#new'
+  
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'

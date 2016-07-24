@@ -25,8 +25,15 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
-
+    @event = Event.new
+    t = Date.strptime(event_params[:start_time], "%d/%m/%Y").strftime("%FT%T")
+    @event.title = event_params[:title]
+    @event.description = event_params[:description]
+    @event.start_time = t.to_time
+    @event.end_time = (t.to_time + 4 * 60 * 60)
+    # t = Time.now
+    # @event.start_time = t
+    # @event.end_time = (t + 4 * 60 * 60)
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
